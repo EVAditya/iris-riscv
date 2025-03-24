@@ -1,0 +1,24 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sun Mar 23 13:03:08 2025
+[*]
+[dumpfile] "/home/aditya/VStudio/veril/iris/iris-riscv/output.vcd"
+[dumpfile_mtime] "Sun Mar 23 13:01:57 2025"
+[dumpfile_size] 75509
+[savefile] "/home/aditya/VStudio/veril/iris/iris-riscv/riscywave.gtkw"
+[timestart] 0
+[size] 1344 600
+[pos] 49 81
+*-4.000000 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] tb_riscv_sc.
+[treeopen] tb_riscv_sc.riscv_DUT.
+[sst_width] 278
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 149
+@28
+tb_riscv_sc.clk
+@23
+tb_riscv_sc.riscv_DUT.m_ALU.ALUOut[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

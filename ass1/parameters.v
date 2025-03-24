@@ -1,116 +1,127 @@
-//Opcodes
-parameter RTYPE = 7'b0110011;
-parameter ITYPE = 7'b0010011; // For immediate arithmetic instructions (addi)
-parameter I2TYPE = 7'b0000011; // For load instructions
-parameter STYPE = 7'b0100011;
-parameter BTYPE = 7'b1100011;
-parameter UTYPE = 7'b0110111;
-parameter JTYPE = 7'b1101111;
+// parameters.v
+`define RTYPE 7'b0110011
+`define ITYPE 7'b0010011 // For immediate arithmetic instructions (addi)
+`define I2TYPE 7'b0000011 // For load instructions
+`define STYPE 7'b0100011
+`define BTYPE 7'b1100011
+`define JAL 7'b1101111
+`define JALR 7'b1100111
+`define LUI 7'b0110111
+`define AUIPC 7'b0010111
+
+`define ECALL 7'b1110011
+`define EBREAK 7'b1110011
+`define CSRRW 7'b1110011
+`define CSRRS 7'b1110011
+`define CSRRC 7'b1110011
+`define CSRRWI 7'b1110011
+`define CSRRSI 7'b1110011
+`define CSRRCI 7'b1110011
+
 
 // R-type instructions
-parameter f3add = 3'b000;
-parameter f7add = 7'b0000000;
-parameter f3sub = 3'b000;
-parameter f7sub = 7'b0100000;
-parameter f3sll = 3'b001;
-parameter f7sll = 7'b0000000;
-parameter f3slt = 3'b010;
-parameter f7slt = 7'b0000000;
-parameter f3sltu = 3'b011;
-parameter f7sltu = 7'b0000000;
-parameter f3xor = 3'b100;
-parameter f7xor = 7'b0000000;
-parameter f3srl = 3'b101;
-parameter f7srl = 7'b0000000;
-parameter f3sra = 3'b101;
-parameter f7sra = 7'b0100000;
-parameter f3or = 3'b110;
-parameter f7or = 7'b0000000;
-parameter f3and = 3'b111;
-parameter f7and = 7'b0000000;
+`define f3add 3'b000
+`define f3sub 3'b000
+`define f3sll 3'b001
+`define f3slt 3'b010
+`define f3sltu 3'b011
+`define f3xor 3'b100
+`define f3srl 3'b101
+`define f3sra 3'b101
+`define f3or 3'b110
+`define f3and 3'b111
 
 // I-type instructions
-parameter f3addi = 3'b000;
-parameter f3andi = 3'b700;
-parameter f3ori = 3'b600;
-parameter f3xori = 3'b400;
-parameter f3slti = 3'b010;
-parameter f3sltiu = 3'b011;
-parameter f3shlli = 3'b001;
-parameter f3srli = 3'b101;
-parameter f3srai = 3'b101;
+`define f3addi 3'b000
+`define f3andi 3'b111
+`define f3ori 3'b110
+`define f3xori 3'b100
+`define f3slti 3'b010
+`define f3sltiu 3'b011
+`define f3shlli 3'b001
+`define f3srli 3'b101
+`define f3srai 3'b101
 
-//I2-type instructions
-parameter f3lb = 3'b000; // Load Byte
-parameter f3lh = 3'b001; // Load Halfword
-parameter f3lw = 3'b010; // Load Word
-parameter f3lbu = 3'b100; // Load Byte Unsigned
-parameter f3lhu = 3'b101; // Load Halfword Unsigned
+// I2-type instructions
+`define f3lb 3'b000 // Load Byte
+`define f3lh 3'b001 // Load Halfword
+`define f3lw 3'b010 // Load Word
+`define f3lbu 3'b100 // Load Byte Unsigned
+`define f3lhu 3'b101 // Load Halfword Unsigned
 
 // S-type instructions
-parameter f3sb = 3'b000;
-parameter f3sh = 3'b001;
-parameter f3sw = 3'b010;
+`define f3sb 3'b000
+`define f3sh 3'b001
+`define f3sw 3'b010
 
-//  B-type instructions
-parameter f3beq = 3'b000;
-parameter f3bne = 3'b001;
-parameter f3blt = 3'b100;
-parameter f3bge = 3'b101;
-parameter f3bltu = 3'b110;
-parameter f3bgeu = 3'b111;
+// B-type instructions
+`define f3beq 3'b000
+`define f3bne 3'b001
+`define f3blt 3'b100
+`define f3bge 3'b101
+`define f3bltu 3'b110
+`define f3bgeu 3'b111
 
 // Define U-type instructions
-parameter f3lui = 3'b000; // Not used, but for completeness
-parameter f3auipc = 3'b000; // Not used, but for completeness
+`define f3lui 3'b000 // Not used, but for completeness
+`define f3auipc 3'b000 // Not used, but for completeness
 
 // Define J-type instructions
-parameter f3jal = 3'b000; // Not used, but for completeness
-parameter f3jalr = 3'b000; // Not used, but for completeness
+`define f3jal 3'b000 // Not used, but for completeness
+`define f3jalr 3'b000 // Not used, but for completeness
 
 // Define SYSTEM instructions
-parameter f3ecall = 3'b000;
-parameter f3ebreak = 3'b001;
-parameter f3csrrw = 3'b001;
-parameter f3csrrs = 3'b010;
-parameter f3csrrc = 3'b011;
-parameter f3csrrwi = 3'b101;
-parameter f3csrrsi = 3'b110;
-parameter f3csrrci = 3'b111;
+`define f3ecall 3'b000
+`define f3ebreak 3'b001
+`define f3csrrw 3'b001
+`define f3csrrs 3'b010
+`define f3csrrc 3'b011
+`define f3csrrwi 3'b101
+`define f3csrrsi 3'b110
+`define f3csrrci 3'b111
 
 // Define other instructions
-parameter f3fence = 3'b000; // Not used, but for completeness
+`define f3fence 3'b000 // Not used, but for completeness
 
 // Define the opcode for load instructions (I2-type)
 
 // Define funct3 for load instructions
 
+// ALUCtl
+`define ADD 4'b0001
+`define SUB 4'b0010
+`define XOR 4'b0011
+`define OR 4'b0100
+`define AND 4'b0101
+`define SLL 4'b0110 // Shift Left Logical
+`define SRL 4'b0111 // Shift Right Logical
+`define SRA 4'b1000 // Shift Right Arithmetic
+`define SLT 4'b1001 // Set Less Than
+`define SLTU 4'b1010 // Set Less Than Unsigned
+`define BEQ 4'b1011 // Branch Equal
+`define BLT 4'b1101 // Branch Less Than
+`define BGE 4'b1110 // Branch Greater or Equal
+`define BLTU 4'b1111 // Branch Less Than Unsigned
+`define BGEU 4'b1100 // Branch Greater or Equal Unsigned
 
-//ALUCtl
+`define unused_here1 4'b0000 // Branch Not Equal
 
-parameter ADD = 4'b0010;
-parameter SUB = 4'b0110;
-parameter XOR = 4'b0111;
-parameter OR = 4'b0001;
-parameter AND = 4'b0000;
-parameter SLL = 4'b0011; // Shift Left Logical
-parameter SRL = 4'b1010; // Shift Right Logical
-parameter SRA = 4'b1011; // Shift Right Arithmetic
-parameter SLT = 4'b0101; // Set Less Than
-parameter SLTU = 4'b0100; // Set Less Than Unsigned
-parameter LB = 4'b1100;  // Load Byte
-parameter LH = 4'b1101;  // Load Halfword
-parameter LW = 4'b1110;  // Load Word
-parameter LBU = 4'b1111; // Load Byte Unsigned
-parameter LHU = 4'b1000; // Load Halfword Unsigned\
-parameter unused_here=4'b1000;`
 
-// parameter ADDI = 4'b1000; // Add Immediate
-// parameter XORI = 4'b1001; // Xor Immediate
-// parameter ORI = 4'b1010; // Or Immediate
-// parameter ANDI = 4'b1011; // And Immediate
-// parameter SLLI = 4'b1100; // Shift Left Logical Immediate
-// parameter SRLI = 4'b1101; // Shift Right Logical Immediate
-// parameter SRAI = 4'b1110; // Shift Right Arithmetic Immediate
-// parameter SLTI = 4'b1111; // Set Less Than Immediate
-// parameter SLTIU = 4'b1112; // Set Less Than Unsigned Immediate
+// Additional defines for immediate instructions
+
+`define LB 4'b1100  // Load Byte
+`define LH 4'b1101  // Load Halfword
+`define LW 4'b1110  // Load Word
+`define LBU 4'b1111 // Load Byte Unsigned
+`define LHU 4'b1000 // Load Halfword Unsigned
+`define unused_here 4'b1000
+
+`define ADDI 4'b1000 // Add Immediate
+`define XORI 4'b1001 // Xor Immediate
+`define ORI 4'b1010 // Or Immediate
+`define ANDI 4'b1011 // And Immediate
+`define SLLI 4'b1100 // Shift Left Logical Immediate
+`define SRLI 4'b1101 // Shift Right Logical Immediate
+`define SRAI 4'b1110 // Shift Right Arithmetic Immediate
+`define SLTI 4'b1111 // Set Less Than Immediate
+// Note: SLTIU cannot be defined as 4'b1112 because it exceeds the 4-bit range.

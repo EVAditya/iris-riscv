@@ -5,7 +5,7 @@ module PC (
     output reg [31:0] pc_o
 );
 
-always @(posedge clk ) begin
+always @(posedge clk or negedge rst) begin
 	if (~rst)
 		pc_o <=32'b0;
 	else
