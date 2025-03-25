@@ -116,7 +116,6 @@ module Control (
                 memWrite = 0;
                 ALUSrc = 0;
                 regWrite = 0;
-                jal=0;
                 jalr=0;
             end
     endcase

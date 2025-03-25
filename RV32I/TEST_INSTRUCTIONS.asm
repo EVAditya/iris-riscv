@@ -6,7 +6,7 @@ addi t0, zero, 0
 LOOP:
    slti t1, t0, 7
    beq t1, zero, EXIT
-   addi t0, t0, 1
+   addi t0, t0, 1 
    beq zero, zero, LOOP
 EXIT:
     ori t1, t1, 10

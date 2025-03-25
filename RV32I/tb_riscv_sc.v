@@ -15,12 +15,14 @@ initial begin
 	$dumpfile("output.vcd");
 	$dumpvars(0, tb_riscv_sc);
 
-	$monitor("%d, t0 %d, t1 %d, t2 %d, s0 %d, mem %d",
-		$time, riscv_DUT.m_Register.regs[5],
-		riscv_DUT.m_Register.regs[6],
-		riscv_DUT.m_Register.regs[7],
-		riscv_DUT.m_Register.regs[8],
-		riscv_DUT.m_DataMemory.data_memory[]
+	$monitor("%d, t0 %h, t1 %h, t2 %h, s0 %h, mem %h, r %h",
+		$time, 
+		riscv_DUT.m_Register.regs[1],
+		riscv_DUT.m_Register.regs[2],
+		riscv_DUT.m_Register.regs[3],
+		riscv_DUT.m_Register.regs[15],	
+		riscv_DUT.m_DataMemory.data_memory[3],
+		riscv_DUT.instr[11:7]
 	);
 	clk = 0;
 	start = 0;

@@ -7,6 +7,7 @@ module ImmGen#(parameter Width = 32) (
     // ImmGen generate imm value based on opcode
 
     wire [6:0] opcode = inst[6:0];
+    wire [2:0] funct3 = inst[14:12];
     always @(*) 
     begin
         case(opcode)
@@ -14,7 +15,7 @@ module ImmGen#(parameter Width = 32) (
             // TODO: implement your ImmGen here
             // Hint: follow the RV32I opcode map table to set imm value
             //Done
-            `ITYPE: imm=inst[31:20];
+            `ITYPE: imm=(funct3=3'h1|funct3=3'h5)?inst[24:20] : inst[31:20]; // Shift functions need only 1st 5 registers of imm
             `I2TYPE: imm=inst[31:20];
             `STYPE: imm={{20{inst[31]}},inst[31:25],inst[11:7]};
             `BTYPE: imm={{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};

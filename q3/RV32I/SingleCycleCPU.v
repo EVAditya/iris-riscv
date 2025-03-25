@@ -1,10 +1,21 @@
 /*
+ENTIRE RV32I SINGLE CYCLE IMPLEMENTATION:
+I have divided the opcodes to different types
+RTYPE: implemented in the ALU
+ITYPE: includes immediate arithmetic and logical functions. Implemented in ALU
+I2TYPE: includes load functions. Implemented in partselector m_load module
+STYPE: includes store functions. Implemented in partselector m_store module
+BTYPE: includes branch functions. Implemented in ALU's zero output. Branching happens only when zero and branch(in CU) are both 1.
+JAL and AUIPC: implemented in the writeback mux (200th line here)
+JALR: implemented in the pcnext mux (150th line here)
+LUI: implemented in a mux and control unit (98th line)
+
+
 LIMITATIONS:
 ecall and ebreak not implemented
-for slli, srli, srai, imm must only have value in [4:0], all other bits must be 0
 */
 
-`include "ass1/parameters.v"
+`include "parameters.v"
 
 module SingleCycleCPU (
     input clk,
@@ -21,10 +32,11 @@ wire [31:0] pctarget, pcplus4;
 
 //assign pc = (pcsrc) ? pctarget : pcplus4;
 
-wire branch, memRead, memtoReg, memWrite, ALUSrc, regWrite;
+wire branch, memRead, memWrite, ALUSrc, regWrite;
+wire [1:0] memtoReg;
 wire [1:0] ALUOp;
 
-wire [31:0] writeData;
+wire [31:0] regWriteData;
 
 wire [31:0] readData2, srcA, srcB;
 // assign srcB = (ALUSrc) ? immext : readData2;
@@ -35,7 +47,10 @@ wire zero;
 wire [31:0] ALUOut; // Declare ALUOut as a wire
 wire [31:0] readData; // Declare readData as a wire
 
-wire readReg1, opcode, funct3, funct7;
+wire [5:0] readReg1; 
+wire [6:0] opcode; 
+wire [2:0] funct3; 
+wire funct7;
 
 assign opcode=instr[6:0];
 assign funct3=instr[14:12];
@@ -57,7 +72,7 @@ PC m_PC(
     .pc_o(pc)
 );
 
-Adder m_pc_plus_4(
+adder m_pc_plus_4(
     .a(pc),
     .b(32'd4),
     .sum(pcplus4)
@@ -79,9 +94,9 @@ Control m_Control(
     .regWrite(regWrite),
     .jalr(jalr)
 );
-
-assign readData1= (opcode==`LUI) ? 32'b0 : instr[19:15]; 
-//This change ansures ALU adds zero reg and imm for LUI instruction
+wire [4:0] readData1;
+assign readData1= (opcode==`LUI) ? 5'b0 : instr[19:15]; 
+//This change ensures ALU adds zero reg and imm for LUI instruction
 
 Register m_Register(
     .clk(clk),
@@ -90,7 +105,7 @@ Register m_Register(
     .readReg1(readData1),
     .readReg2(instr[24:20]),
     .writeReg(instr[11:7]),
-    .writeData(loadbus),
+    .writeData(regWriteData),
     .readData1(srcA),
     .readData2(readData2)
 );
@@ -116,7 +131,7 @@ ShiftLeftOne m_ShiftLeftOne(
     .o()
 );
 
-Adder m_Adder_2(
+adder m_Adder_2(
     .a(pc),
     .b(imm),
     .sum(pctarget)
@@ -134,7 +149,7 @@ assign pcnext=(pcsel) ? pctarget : (jalr) ? ALUOut : pcplus4;
 
 Mux2to1 #(.size(32)) m_Mux_ALU(
     .sel(ALUSrc),
-    .s0(readData2),``
+    .s0(readData2),
     .s1(imm),
     .out(srcB)
 );
@@ -160,7 +175,7 @@ DataMemory m_DataMemory(
     .memWrite(memWrite),
     .memRead(memRead),
     .address(ALUOut), // Assuming address is srcB
-    .writeData(storebus), // Assuming write data is readData2
+    .writeData(regWriteData), // Assuming write data is readData2
     .readData(readData)
 );
 
@@ -183,10 +198,10 @@ partselector m_load(
 // );
 
 //Needed a 4*1 mux here
-assign writeData = (memtoReg==00) ? ALUOut :
-                    (memtoReg==01) ? readData :
-                    (memtoReg==10) ? pc : //JAL        
-                    (memtoReg==11) ? pcnext : 0; //AUIPC
+assign regWriteData = (memtoReg==2'b00) ? ALUOut :
+                    (memtoReg==2'b01) ? loadbus :  //Gives parts as output when required
+                    (memtoReg==2'b10) ? pcplus4 : //JAL        
+                    (memtoReg==2'b11) ? pctarget : 0; //AUIPC
 
 endmodule
 
