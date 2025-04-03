@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Apr  2 21:44:09 2025
+[*]
+[dumpfile] "/home/aditya/VStudio/veril/iris/axi/given/top_tb.vcd"
+[dumpfile_mtime] "Wed Apr  2 21:40:37 2025"
+[dumpfile_size] 74593
+[savefile] "/home/aditya/VStudio/veril/iris/axi/given/hist.gtkw"
+[timestart] 0
+[size] 1344 600
+[pos] 149 181
+*-5.000000 2057 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] top_tb.
+[treeopen] top_tb.m_top.
+[sst_width] 278
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 149
+@28
+top_tb.m_top.m_hist.aclk
+top_tb.m_top.m_hist.aresetn
+@22
+top_tb.m_top.m_hist.count[7:0]
+@28
+top_tb.m_top.m_hist.count_bin[2:0]
+@22
+top_tb.m_top.m_hist.data_bin[8:0]
+top_tb.m_top.m_hist.m_axis_tdata[31:0]
+@28
+top_tb.m_top.m_hist.m_axis_tready
+top_tb.m_top.m_hist.m_axis_tvalid
+@22
+top_tb.m_top.m_hist.number[7:0]
+top_tb.m_top.m_hist.s_axis_tdata[31:0]
+@28
+top_tb.m_top.m_hist.s_axis_tready
+@29
+top_tb.m_top.m_hist.s_axis_tvalid
+[pattern_trace] 1
+[pattern_trace] 0
